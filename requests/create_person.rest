@@ -2,6 +2,36 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Vishant Kalwani",
-    "number": "9755814587"
+    "name": "VK",
+    "number": "123456789"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "",
+    "number": "123456789"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "VK",
+    "number": ""
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Ada Lovelace",
+    "number": "123456789"
 }

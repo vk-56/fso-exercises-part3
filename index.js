@@ -77,6 +77,19 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
+    if(!body.number) {
+        return response.status(400).json({
+            "error": "Number cannot be empty"
+        })
+    }
+
+    if(persons.find((person) => person.name === body.name)) {
+        
+        return response.status(400).json({
+            "error": "Name must be unique (already in phonebook)"
+        })
+    }
+
     const person = {
         id: generateId(),
         name: body.name,
