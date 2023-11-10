@@ -12,6 +12,9 @@ morgan.token('res-data', function (response) {
 // Middleware
 app.use(cors())
 app.use(express.json())
+// Make express show static content
+// Line index.html and minified JS
+app.use(express.static('dist'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :res-data'))
 
 
