@@ -11,9 +11,23 @@ mongoose.connect(url)
     console.log('error connecting to MongoDB:', error.message)
   })
 
+
+function numberValidator (number) {
+  const phoneNumberPattern = /^(?:\d{2,3}-\d+)$/
+  return phoneNumberPattern.test(number)
+}
+
+const customValidate = [numberValidator, 'Invalid phone number! Phone numbers must have 2 or 3 digits in the start, followed by a hyphen and any number of digits']
+
   const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
+    name: {
+      minLength: 3,
+      type: String
+    },
+    number: {
+      validate: customValidate,
+      type: String
+    }
 })
 
 // Convert _id of mongodb to string and store in id

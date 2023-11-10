@@ -31,11 +31,11 @@ const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
     }
+    else if (error.name === 'ValidationError') {
+        return response.status(400).send({ error: error.message })    
+    }
     next(error)
 } 
-
-let persons = [
-]
 
 // Root route
 app.get('/', (request, response) => {
@@ -88,7 +88,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 // Create new person details
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
 
     if(!body.name) {
@@ -112,6 +112,7 @@ app.post('/api/persons', (request, response) => {
         .then( savedPerson => {
             response.status(200).json(savedPerson)
         })
+        .catch( error => next(error))
 })
 
 // Replace number with new number
@@ -121,7 +122,7 @@ app.put('/api/persons/:id', (request, response, next) => {
         number: request.body.number
     }
 
-    Person.findByIdAndUpdate(request.params.id, personObj, { new: true})
+    Person.findByIdAndUpdate(request.params.id, personObj, { new: true, runValidators: true })
         .then( updatedPerson => {
             console.log(updatedPerson)
             response.json(updatedPerson)
